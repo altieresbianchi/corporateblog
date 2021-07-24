@@ -1,6 +1,6 @@
 package br.com.phaneronsoft.corpblog.business.repository
 
-import br.com.phaneronsoft.corpblog.business.storage.LocalDataStorage
+import br.com.phaneronsoft.corpblog.business.storage.StorageContract
 import br.com.phaneronsoft.corpblog.business.vo.PostVO
 import br.com.phaneronsoft.corpblog.business.vo.UserVO
 import com.google.gson.Gson
@@ -8,7 +8,7 @@ import com.google.gson.reflect.TypeToken
 import java.text.SimpleDateFormat
 import java.util.*
 
-class PostApiRepository(val prefs: LocalDataStorage) : PostRepositoryContract {
+class PostApiRepository(val prefs: StorageContract) : PostRepositoryContract {
     companion object {
         const val KEY_POST_LIST = "KEY_POST_LIST_"
     }

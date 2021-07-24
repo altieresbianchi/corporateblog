@@ -3,7 +3,7 @@ package br.com.phaneronsoft.corpblog.business.storage
 import android.content.Context
 import android.content.SharedPreferences
 
-class LocalDataStorage(val context: Context) {
+class LocalDataStorage(val context: Context) : StorageContract {
     companion object {
         const val PREFS_NAME = "corpBlog"
     }
@@ -11,45 +11,50 @@ class LocalDataStorage(val context: Context) {
     private val prefs: SharedPreferences =
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
-    fun saveString(key: String, text: String) {
-        val editor: SharedPreferences.Editor = prefs.edit()
-        editor.putString(key, text)
-        editor.apply()
+    override fun saveString(key: String, text: String): Boolean {
+        with(prefs.edit()) {
+            putString(key, text)
+            return commit()
+        }
     }
 
-    fun saveInt(key: String, value: Int) {
-        val editor: SharedPreferences.Editor = prefs.edit()
-        editor.putInt(key, value)
-        editor.apply()
+    override fun saveInt(key: String, value: Int): Boolean {
+        with(prefs.edit()) {
+            putInt(key, value)
+            return commit()
+        }
     }
 
-    fun saveBoolean(key: String, status: Boolean) {
-        val editor: SharedPreferences.Editor = prefs.edit()
-        editor.putBoolean(key, status)
-        editor.apply()
+    override fun saveBoolean(key: String, status: Boolean): Boolean {
+        with(prefs.edit()) {
+            putBoolean(key, status)
+            return commit()
+        }
     }
 
-    fun getString(key: String): String? {
+    override fun getString(key: String): String? {
         return prefs.getString(key, null)
     }
 
-    fun getInt(key: String): Int {
+    override fun getInt(key: String): Int {
         return prefs.getInt(key, 0)
     }
 
-    fun getBoolean(key: String, defaultValue: Boolean): Boolean {
+    override fun getBoolean(key: String, defaultValue: Boolean): Boolean {
         return prefs.getBoolean(key, defaultValue)
     }
 
-    fun clearAllData() {
-        val editor: SharedPreferences.Editor = prefs.edit()
-        editor.clear()
-        editor.apply()
+    override fun clearAllData() {
+        with(prefs.edit()) {
+            clear()
+            commit()
+        }
     }
 
-    fun deleteValue(key: String) {
-        val editor: SharedPreferences.Editor = prefs.edit()
-        editor.remove(key)
-        editor.apply()
+    override fun deleteValue(key: String) {
+        with(prefs.edit()) {
+            remove(key)
+            commit()
+        }
     }
 }

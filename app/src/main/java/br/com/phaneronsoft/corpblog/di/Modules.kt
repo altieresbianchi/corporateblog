@@ -5,6 +5,7 @@ import br.com.phaneronsoft.corpblog.business.api.NewsApiClient
 import br.com.phaneronsoft.corpblog.business.api.RestClient
 import br.com.phaneronsoft.corpblog.business.storage.LocalDataStorage
 import br.com.phaneronsoft.corpblog.business.repository.*
+import br.com.phaneronsoft.corpblog.business.storage.StorageContract
 import br.com.phaneronsoft.corpblog.presentation.viewmodel.*
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidContext
@@ -17,8 +18,8 @@ val coroutineModule: Module = module {
     factory<CoroutineContext> { Dispatchers.IO }
 }
 
-val LocalDataStorageModule: Module = module {
-    factory {
+val localDataStorageModule: Module = module {
+    factory<StorageContract> {
         LocalDataStorage(androidContext())
     }
 }

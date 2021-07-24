@@ -1,12 +1,12 @@
 package br.com.phaneronsoft.corpblog.business.repository
 
-import br.com.phaneronsoft.corpblog.business.storage.LocalDataStorage
+import br.com.phaneronsoft.corpblog.business.storage.StorageContract
 import br.com.phaneronsoft.corpblog.business.vo.UserVO
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.util.*
 
-class UserApiRepository(val prefs: LocalDataStorage) : UserRepositoryContract {
+class UserApiRepository(val prefs: StorageContract) : UserRepositoryContract {
     companion object {
         const val KEY_USER_LIST = "KEY_USER_LIST"
         const val KEY_CURRENT_USER = "KEY_CURRENT_USER"
@@ -32,14 +32,18 @@ class UserApiRepository(val prefs: LocalDataStorage) : UserRepositoryContract {
     }
 
     override fun login(email: String, password: String): Boolean {
-        for (user in this.getList()) {
-            if (user.email == email && user.password == password) {
-                this.setCurrentUser(user)
+        try {
+            for (user in this.getList()) {
+                if (user.email == email && user.password == password) {
+                    this.setCurrentUser(user)
 
-                return true
+                    return true
+                }
             }
+            return false
+        } catch (e: Exception) {
+            throw e
         }
-        return false
     }
 
     override fun getUser(): UserVO? {

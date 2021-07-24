@@ -24,7 +24,7 @@ class MainApplication : Application() {
             modules(
                 listOf(
                     coroutineModule,
-                    LocalDataStorageModule,
+                    localDataStorageModule,
                     userRepositoryModule,
                     postRepositoryModule,
                     newsRepositoryModule,
